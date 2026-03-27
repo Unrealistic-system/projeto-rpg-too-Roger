@@ -1,4 +1,4 @@
-class personagem:
+class Personagem:
     def __init__(self, nome:str):
         self.nome = nome
         # vai com _ antes para ficar privado, só pode ser alterado o nome.
@@ -41,16 +41,16 @@ class personagem:
          outro:personagem -> type hint, não bloqueia só sujere o tipo
          precisa verificar com isinstance p/ bloquear testes entre tipos diferentes (str vs personagem por exemplo)
         '''
-        if not isinstance(outro, personagem):# verifica o tipo do objeto, se for diferente não dá erro, só retorna falso
+        if not isinstance(outro, Personagem):# verifica o tipo do objeto, se for diferente não dá erro, só retorna falso
             return False
         return self.nome == outro.nome and self.nivel == outro.nivel and self.xp == outro.xp and self.vida == outro.vida
         # posso retornar o teste direto, o resultado vai ser true ou false
 
-def entrada_personagem() -> personagem:
+def entrada_personagem() -> Personagem:
     while True:
         try:
             nome = input(f"{'-'*10}\nDigite o nome do personagem: ")
-            criar_personagem = personagem(nome)
+            criar_personagem = Personagem(nome)
             return criar_personagem
         except TypeError as e:
             print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")

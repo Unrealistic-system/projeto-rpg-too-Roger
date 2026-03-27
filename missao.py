@@ -1,4 +1,4 @@
-class missao:
+class Missao: # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa):
         self.nome = nome
         self.descricao = descricao
@@ -73,21 +73,20 @@ class missao:
         return f"{self.nome} ({self.descricao}) [{self.recompensa}] [{self.status}]"
    
     def __eq__(self, outro:object) -> bool:
-        if not isinstance(outro, missao):
+        if not isinstance(outro, Missao):
             return False
         return self.nome == outro.nome and self.descricao == outro.descricao and self.recompensa == outro.recompensa and self.status == outro.status
     
-def entrada_missao() -> missao:
+def entrada_missao() -> Missao:
     while True:
         try:
             nome = input(f"{'-'*10}\nDigite o nome da Misão: ")
             desc = input(f"{'-'*10}\nDigite a descrição: ")
             rec = int(input(f"{'-'*10}\nDigite a recompensa: "))
-            st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
-            if not st:
-                missao_criada = missao(nome, desc, rec) # Usa default "PENDENTE"
-            else:
-                missao_criada = missao(nome, desc, rec, st)
+            #remover por enquanto
+            #st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
+            #if not st:
+            missao_criada = Missao(nome, desc, rec)
             return missao_criada
         except TypeError as e:
             print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")
