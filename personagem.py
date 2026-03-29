@@ -37,10 +37,6 @@ class Personagem:
     def __str__(self):
         return f" --{self.nome} LV:{self.nivel} XP:{self.xp} HP:{self.vida}-- "
     def __eq__(self, outro:object) -> bool:
-        '''
-         outro:personagem -> type hint, não bloqueia só sujere o tipo
-         precisa verificar com isinstance p/ bloquear testes entre tipos diferentes (str vs personagem por exemplo)
-        '''
         if not isinstance(outro, Personagem):# verifica o tipo do objeto, se for diferente não dá erro, só retorna falso
             return False
         return self.nome == outro.nome and self.nivel == outro.nivel and self.xp == outro.xp and self.vida == outro.vida

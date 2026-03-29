@@ -4,13 +4,11 @@ class Missao: # começar classe com maiusculo - convenção python
         self.descricao = descricao
         self.recompensa = recompensa
         self.status = "PENDENTE"
-
+        '''
         self.nome = nome
         self.descricao = descricao
         self.recompensa = recompensa
-
-    #PROPERTY's -> esse é o getter, pra poder receber de volta os dados
-    #SETTER's -> é como gravar os dados do objeto
+        '''
     # NOME:
     @property 
     def nome(self):
@@ -66,8 +64,10 @@ class Missao: # começar classe com maiusculo - convenção python
 
 
     def exibir_dados(self):
-        return f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\nDescrição: {self.descricao}\nRecompensa: {self.recompensa} XP\nStatus: {self.status}\n{'='*30}"# posso usar contas pra exibir varios caracteres iguais :D
-
+        return (f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
+                f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
+                f"Status: {self.status}\n{'='*30}")
+                # posso usar contas pra exibir varios caracteres iguais :D
 
     def __str__(self):
         return f"{self.nome} ({self.descricao}) [{self.recompensa}] [{self.status}]"
