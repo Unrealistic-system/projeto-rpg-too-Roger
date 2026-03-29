@@ -75,23 +75,3 @@ class Missao: # começar classe com maiusculo - convenção python
             return False
         return self.nome == outro.nome and self.descricao == outro.descricao and self.recompensa == outro.recompensa and self.status == outro.status
     
-def entrada_missao() -> Missao:
-    while True:
-        try:
-            nome = input(f"{'-'*10}\nDigite o nome da Misão: ")
-            desc = input(f"{'-'*10}\nDigite a descrição: ")
-            rec = int(input(f"{'-'*10}\nDigite a recompensa: "))
-            #remover por enquanto
-            st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
-            if not st:
-                missao_criada = Missao(nome, desc, rec)
-            else:
-                missao_criada = Missao(nome, desc, rec, st) # type: ignore
-                # O type:ignore 
-            return missao_criada
-        except TypeError as e:
-            print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")
-        except ValueError as e:
-            print(f"{'+'*10}\nValor Inválido: {e}\n{'+'*10}")
-        except Exception as e:
-            print(f"{'+'*10}\nERRO: {e}\n{'+'*10}")

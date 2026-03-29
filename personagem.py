@@ -42,15 +42,3 @@ class Personagem:
         return self.nome == outro.nome and self.nivel == outro.nivel and self.xp == outro.xp and self.vida == outro.vida
         # posso retornar o teste direto, o resultado vai ser true ou false
 
-def entrada_personagem() -> Personagem:
-    while True:
-        try:
-            nome = input(f"{'-'*10}\nDigite o nome do personagem: ")
-            criar_personagem = Personagem(nome)
-            return criar_personagem
-        except TypeError as e:
-            print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")
-        except ValueError as e:
-            print(f"{'+'*10}\nValor Inválido: {e}\n{'+'*10}")
-        except Exception as e:
-            print(f"{'+'*10}\nERRO: {e}\n{'+'*10}")
