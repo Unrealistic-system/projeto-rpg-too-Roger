@@ -1,15 +1,11 @@
+from Status import Status_Missao
 class Missao: # começar classe com maiusculo - convenção python
-    def __init__(self, nome, descricao, recompensa):
+    def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
         self.nome = nome
         self.descricao = descricao
         self.recompensa = recompensa
-        self.status = "PENDENTE"
-        '''
-        self.nome = nome
-        self.descricao = descricao
-        self.recompensa = recompensa
-        '''
-    # NOME:
+        self.status = status
+
     @property 
     def nome(self):
         return self._nome
@@ -53,24 +49,26 @@ class Missao: # começar classe com maiusculo - convenção python
 
     @status.setter
     def status(self, n_st):
-        if not isinstance(n_st, str):
-            raise TypeError("O status precisa ser texto!!!")
-        n_st = n_st.upper().strip()# maiusculo e sem espaço extra
-        st_posssivel = ("PENDENTE", "EM ANDAMENTO", "CONCLUIDA")
-        if n_st in st_posssivel:
+        if isinstance(n_st, Status_Missao):
             self._status = n_st
+            return
+        if isinstance(n_st, str):
+            try:
+                self._status = Status_Missao[n_st.upper()]
+            except KeyError:# o que é: try to access a dictionary using a key that does not exist in that dictionary
+                raise ValueError(f"'{n_st}' não é um Status válido.")
         else:
-            raise ValueError(f"Status inválido! Use uma destas opções: {st_posssivel}")
+            raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
 
 
     def exibir_dados(self):
         return (f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
                 f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
-                f"Status: {self.status}\n{'='*30}")
+                f"Status: {self.status.name}\n{'='*30}")
                 # posso usar contas pra exibir varios caracteres iguais :D
 
     def __str__(self):
-        return f"{self.nome} ({self.descricao}) [{self.recompensa}] [{self.status}]"
+        return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]"
    
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, Missao):
@@ -84,9 +82,12 @@ def entrada_missao() -> Missao:
             desc = input(f"{'-'*10}\nDigite a descrição: ")
             rec = int(input(f"{'-'*10}\nDigite a recompensa: "))
             #remover por enquanto
-            #st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
-            #if not st:
-            missao_criada = Missao(nome, desc, rec)
+            st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
+            if not st:
+                missao_criada = Missao(nome, desc, rec)
+            else:
+                missao_criada = Missao(nome, desc, rec, st) # type: ignore
+                # O type:ignore 
             return missao_criada
         except TypeError as e:
             print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")

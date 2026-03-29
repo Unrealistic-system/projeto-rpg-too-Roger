@@ -1,4 +1,49 @@
+from Status import Status_Missao
 from missao import Missao
 
-class Missao_combate (Missao):
+class MissaoColeta (Missao):
+    def __init__(self, nome, descricao, recompensa, item, quantidade:int, status=Status_Missao.PENDENTE):
+        super().__init__(nome, descricao, recompensa, status)
+        self._item_necesario = item
+        self._quantidade = quantidade
+    
+    @property 
+    def item_necesario(self):
+        return self._item_necessasio
+    
+    @item_necesario.setter
+    def item_necessario(self, it):
+        if not isinstance(it, str):
+            raise TypeError("Item precisa ser string.")
+        it = it.split()
+        it = ' '.join(it)
+        self._item_necessasio = it
+
+    @property 
+    def quantidade(self):
+        return self._quantidade
+    
+    @quantidade.setter
+    def quantidade(self, qt):
+        if not isinstance(qt, int):
+            raise ValueError("Quantidade precisa ser um número inteiro.")
+        self._quantidade = qt
+
+    def exibir_dados(self):
+        return (f"{'='*30}\n--- MISSÃO DE COLETA: ---"
+                f"\nNome da Missão: {self.nome}\n"
+                f"Descrição: {self.descricao}\n"
+                f"Recompensa: {self.recompensa} XP\n"
+                f"Status: {self.status.name}\n{'='*30}"
+                f""
+                f"")
+                # posso usar contas pra exibir varios caracteres iguais :D
+
+    def __str__(self):
+        return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]"
+   
+    def __eq__(self, outro:object) -> bool:
+        if not isinstance(outro, Missao):
+            return False
+        return self.nome == outro.nome and self.descricao == outro.descricao and self.recompensa == outro.recompensa and self.status == outro.status
     
