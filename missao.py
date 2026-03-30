@@ -85,11 +85,10 @@ class Missao: # começar classe com maiusculo - convenção python
             print(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
             return
         else:
+            # projetar possibilidade de fracasso dps
             self.status = Status_Missao.CONCLUIDA
             print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
                   f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
-
-
 
 
     def exibir_dados(self):

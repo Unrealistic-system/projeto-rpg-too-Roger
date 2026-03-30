@@ -2,32 +2,30 @@ from Status import Status_Missao
 from missao import Missao
 
 class MissaoColeta (Missao):
-    def __init__(self, nome, descricao, recompensa, item:str, quantidade:int, status=Status_Missao.PENDENTE):
+    def __init__(self, nome, descricao, recompensa, item, quantidade:int, status=Status_Missao.PENDENTE):
         super().__init__(nome, descricao, recompensa, status)
-        self._item_necesario = item
-        self._quantidade = quantidade
+        self.item_necessario = item
+        self.quantidade = quantidade
     
     @property 
     def item_necesario(self):
-        return self._item_necessasio
-    
+        return self.__item_necessario
     @item_necesario.setter
     def item_necessario(self, it):
         if not isinstance(it, str):
-            raise TypeError("Item precisa ser string.")
+            raise TypeError("Item precisa ser texto.")
         it = it.split()
         it = ' '.join(it)
-        self._item_necessasio = it
+        self.__item_necessario = it
 
     @property 
     def quantidade(self):
-        return self._quantidade
-    
+        return self.__quantidade
     @quantidade.setter
     def quantidade(self, qt):
         if not isinstance(qt, int):
             raise ValueError("Quantidade precisa ser um número inteiro.")
-        self._quantidade = qt
+        self.__quantidade = qt
 
     def exibir_dados(self):
         return (f"{'='*30}\n--- MISSÃO DE COLETA: ---"

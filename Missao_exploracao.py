@@ -10,7 +10,7 @@ class MisssaoExploracao (Missao):
 
     @property
     def local(self):
-        return self._local
+        return self.__local
     @local.setter
     def local(self, local):
         if not isinstance(local, str):
@@ -18,29 +18,29 @@ class MisssaoExploracao (Missao):
         local = local.split()
         local = ' '.join(local)
         local = local.title() #maiuscula primeira
-        self._local = local
+        self.__local = local
 
     @property
     def distancia(self):
-        return self._distancia
+        return self.__distancia
     @distancia.setter
     def distancia(self, dt):
         if not isinstance(dt, float):
             raise TypeError("Distancia precisa ser decimal.")
         if 0 <= dt > 50:
             raise ValueError("Distancia precisa ser maior que 0 e menor que 50 Km")
-        self._distancia = dt
+        self.__distancia = dt
     
     @property
     def tempo(self):
-        return self._tempo
+        return self.__tempo
     @tempo.setter
     def tempo(self, tempo):
         if not isinstance(tempo, int):
             raise TypeError("Tempo precisa ser minutos em inteiro.")
         if 0 <= tempo > 180:
             raise ValueError("Tempo precisa ser maior que 0 e menor que 180 minutos (3 Horas)")
-        self._tempo = tempo
+        self.__tempo = tempo
     
 
     def exibir_dados(self):

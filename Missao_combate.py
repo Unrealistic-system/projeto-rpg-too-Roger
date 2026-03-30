@@ -9,7 +9,7 @@ class MissaoCombate (Missao):
 
     @property 
     def inimigo(self):
-        return self._inimigo
+        return self.__inimigo
     @inimigo.setter
     def inimigo(self, it):
         if not isinstance(it, str):
@@ -17,16 +17,16 @@ class MissaoCombate (Missao):
         it = it.split()
         it = ' '.join(it)
         it = it.title() #maiuscula primeira
-        self._inimigo = it
+        self.__inimigo = it
 
     @property
     def inimigos_a_derrotar(self):
-        return self._inimigos_a_derrotar
+        return self.__inimigos_a_derrotar
     @inimigos_a_derrotar.setter
     def inimigos_a_derrotar(self, qt):
         if not isinstance(qt, int):
             raise TypeError("Inimigos a derrotar precisa ser inteiro.")
-        self._inimigos_a_derrotar = qt
+        self.__inimigos_a_derrotar = qt
         
     
     def exibir_dados(self):
