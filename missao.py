@@ -60,6 +60,26 @@ class Missao: # começar classe com maiusculo - convenção python
         else:
             raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
 
+    def iniciar_missao (self):
+        if self.status.value == Status_Missao.EM_ANDAMENTO:
+            print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente")
+            return
+        elif self.status.value == Status_Missao.CONCLUIDA:
+            print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente")
+            return
+        elif self.status.value == Status_Missao.FRACASSADA:
+            print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente")
+            return
+        else:
+            self.status = Status_Missao.EM_ANDAMENTO
+            print(f"A missão ‘{self.nome}’ começou! Objetivo central da missão: {self.descricao}")
+
+    def concluir_missao (self):
+        if self.status.value != Status_Missao.EM_ANDAMENTO:
+            pass
+
+
+
 
     def exibir_dados(self):
         return (f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
