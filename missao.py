@@ -62,21 +62,32 @@ class Missao: # começar classe com maiusculo - convenção python
 
     def iniciar_missao (self):
         if self.status.value == Status_Missao.EM_ANDAMENTO:
-            print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente")
+            print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente.")
             return
         elif self.status.value == Status_Missao.CONCLUIDA:
-            print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente")
+            print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente.")
             return
         elif self.status.value == Status_Missao.FRACASSADA:
-            print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente")
+            print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente.")
             return
         else:
             self.status = Status_Missao.EM_ANDAMENTO
-            print(f"A missão ‘{self.nome}’ começou! Objetivo central da missão: {self.descricao}")
+            print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
 
     def concluir_missao (self):
-        if self.status.value != Status_Missao.EM_ANDAMENTO:
-            pass
+        if self.status.value == Status_Missao.CONCLUIDA:
+            print(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
+            return
+        elif self.status.value == Status_Missao.FRACASSADA:
+            print(f"Missão '{self.nome}' Já foi Terminada com Fracasso, não é possivel concluir novamente.")
+            return
+        elif self.status.value == Status_Missao.PENDENTE:
+            print(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
+            return
+        else:
+            self.status = Status_Missao.CONCLUIDA
+            print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                  f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
 
 
 
