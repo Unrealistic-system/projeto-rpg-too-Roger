@@ -1,4 +1,5 @@
-from Status import Status_Missao
+from model.Status import Status_Missao
+
 class Missao: # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
         self.nome = nome

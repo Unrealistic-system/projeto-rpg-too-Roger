@@ -1,4 +1,4 @@
-from missao import Missao
+from model.missao import Missao
 from personagem import Personagem
 
 def entrada_missao() -> Missao:

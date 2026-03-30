@@ -1,5 +1,5 @@
-from Status import Status_Missao
-from missao import Missao
+from model.Status import Status_Missao
+from model.missao import Missao
 
 class MissaoCombate (Missao):
     def __init__(self, nome, descricao, recompensa, inimigos_a_derrotar:int, inimigo:str, status=Status_Missao.PENDENTE):

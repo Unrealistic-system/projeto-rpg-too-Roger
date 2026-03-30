@@ -1,5 +1,5 @@
-from Status import Status_Missao
-from missao import Missao
+from model.Status import Status_Missao
+from model.missao import Missao
 
 class MissaoColeta (Missao):
     def __init__(self, nome, descricao, recompensa, item, quantidade:int, status=Status_Missao.PENDENTE):
