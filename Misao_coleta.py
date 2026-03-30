@@ -37,7 +37,6 @@ class MissaoColeta (Missao):
                 f"Status: {self.status.name}\n"
                 f"Item necessário: {self.item_necesario}\n"
                 f"Quantidade: {self.quantidade}\n{'='*30}")
-                # posso usar contas pra exibir varios caracteres iguais :D
 
     def __str__(self):
         return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}], item: {self.item_necesario} X [{self.quantidade}]"
