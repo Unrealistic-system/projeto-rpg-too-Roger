@@ -62,13 +62,13 @@ class Missao: # começar classe com maiusculo - convenção python
             raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
 
     def iniciar_missao (self):
-        if self.status.value == Status_Missao.EM_ANDAMENTO:
+        if self.status == Status_Missao.EM_ANDAMENTO:
             print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente.")
             return
-        elif self.status.value == Status_Missao.CONCLUIDA:
+        elif self.status == Status_Missao.CONCLUIDA:
             print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente.")
             return
-        elif self.status.value == Status_Missao.FRACASSADA:
+        elif self.status == Status_Missao.FRACASSADA:
             print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente.")
             return
         else:
@@ -76,13 +76,13 @@ class Missao: # começar classe com maiusculo - convenção python
             print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
 
     def concluir_missao (self):
-        if self.status.value == Status_Missao.CONCLUIDA:
+        if self.status == Status_Missao.CONCLUIDA:
             print(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
             return
-        elif self.status.value == Status_Missao.FRACASSADA:
+        elif self.status == Status_Missao.FRACASSADA:
             print(f"Missão '{self.nome}' Já foi Terminada com Fracasso, não é possivel concluir novamente.")
             return
-        elif self.status.value == Status_Missao.PENDENTE:
+        elif self.status == Status_Missao.PENDENTE:
             print(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
             return
         else:
