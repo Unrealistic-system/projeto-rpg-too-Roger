@@ -7,13 +7,15 @@ def entrada_missao() -> Missao:
             nome = input(f"{'-'*10}\nDigite o nome da Misão: ")
             desc = input(f"{'-'*10}\nDigite a descrição: ")
             rec = int(input(f"{'-'*10}\nDigite a recompensa: "))
-            # provavelmente remover para aceitar somente tipo enum?
+            ''' # remover para aceitar somente tipo do enum
             st = input(f"{'-'*10}\nDigite o status:\ntipos: PENDENTE, EM ANDAMENTO OU CONCLUIDA\nou pule com enter: ")
             if not st:
                 missao_criada = Missao(nome, desc, rec)
             else:
                 missao_criada = Missao(nome, desc, rec, st) # type: ignore
                 # O type:ignore 
+            '''
+            missao_criada = Missao(nome, desc, rec)
             return missao_criada
         except TypeError as e:
             print(f"{'+'*10}\nErro de Digitação: {e}\n{'+'*10}")
