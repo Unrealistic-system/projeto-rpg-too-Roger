@@ -11,9 +11,12 @@ if (mscomb1 == mscomb2):
 else:
     print(f"Misões: {mscomb1} e {mscomb2} sao diferentes")
 
+MissaoCombate.iniciar_missao(mscomb1)
+
 print(MissaoCombate.exibir_dados(mscomb1))
 Missao.concluir_missao(mscomb1)
 print(MissaoCombate.exibir_dados(mscomb1))
 
+MissaoCombate.iniciar_missao(mscomb2)
 print(MissaoCombate.exibir_dados(mscomb2))
 Missao.concluir_missao(mscomb2)

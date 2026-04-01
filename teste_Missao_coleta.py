@@ -11,9 +11,12 @@ if (msco == msco2):
 else:
     print(f"Misões: {msco} e {msco2} sao diferentes")
 
+Missao.iniciar_missao(msco)
+
 print(MissaoColeta.exibir_dados(msco))
 Missao.concluir_missao(msco)
 print(MissaoColeta.exibir_dados(msco))
 
+msco2.status = Status_Missao.FRACASSADA
 print(MissaoColeta.exibir_dados(msco2))
 Missao.concluir_missao(msco2)

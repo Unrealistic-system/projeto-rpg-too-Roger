@@ -52,12 +52,16 @@ class Missao: # começar classe com maiusculo - convenção python
     def status(self, n_st):
         if isinstance(n_st, Status_Missao):
             self._status = n_st
-            return
-        if isinstance(n_st, str):
-            try:
-                self._status = Status_Missao[n_st.upper()]
-            except KeyError:# o que é: try to access a dictionary using a key that does not exist in that dictionary
-                raise ValueError(f"'{n_st}' não é um Status válido.")
+            ''' # removido pois aqui aceitaria str e converteria para o tipo do status,
+                # mas não é permitido na descrição do trabalho.
+                # Para aceitar str é só retirar o comentário e acertar a tabulação
+                return
+            if isinstance(n_st, str):
+                try:
+                    self._status = Status_Missao[n_st.upper()]
+                except KeyError:# o que é: try to access a dictionary using a key that does not exist in that dictionary
+                    raise ValueError(f"'{n_st}' não é um Status válido.")
+            '''
         else:
             raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
 
