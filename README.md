@@ -16,8 +16,12 @@ precisa verificar com isinstance p/ bloquear testes entre tipos diferentes (str 
     @property 
     def nome(self):
         return self._nome
+        
 ### SETTER's -> é como gravar os dados do objeto
     @nome.setter
     def nome(self, novo_nome):
         # testes aqui
         self._nome = novo_nome
+
+
+github prof: [link](https://github.com/ProfVanessa-IFSUL/TOO-RPG-2026-1)
