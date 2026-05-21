@@ -1,0 +1,62 @@
+from model.missao import Missao
+from model.Status import EstadoConcluida
+
+class MissaoColeta (Missao):
+    def __init__(self, nome, descricao, recompensa, item, quantidade):
+        super().__init__(nome, descricao, recompensa)
+        #self._estado = EstadoPendente(self)
+        self.item_necessario = item
+        self.quantidade = quantidade
+    
+    @property 
+    def item_necessario(self):
+        return self.__item_necessario
+    
+    @item_necessario.setter
+    def item_necessario(self, it):
+        if not isinstance(it, str):
+            raise TypeError("Item precisa ser texto.")
+        it = it.split()
+        it = ' '.join(it)
+        self.__item_necessario = it
+
+    @property 
+    def quantidade(self):
+        return self.__quantidade
+    @quantidade.setter
+    def quantidade(self, qt):
+        if not isinstance(qt, int):
+            raise TypeError("Quantidade precisa ser um número inteiro.")
+        if qt <= 0:
+            raise ValueError("quantidade precisa ser maior que zero!")
+        else:
+            self.__quantidade = qt
+
+    def concluir_missao (self, valor):
+            super().concluir_missao(valor)
+            self.estado = self.estado.concluir(self.quantidade, valor)
+
+            if isinstance(self.estado, EstadoConcluida):
+                print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                        f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
+            else:
+                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necessario} "
+                           f"não foi atingida. Faltam {self.quantidade-valor}")      
+
+    def exibir_dados(self):
+        str = super().exibir_dados()
+        str += (f"Item necessário: {self.item_necessario}\n"
+                f"Quantidade: {self.quantidade}\n{'='*30}")
+        return str
+
+    def __str__(self):
+        str = super().__str__()
+        str += f", item: {self.item_necessario} X [{self.quantidade}]"
+        return str
+        # return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]
+   
+    """ def __eq__(self, outro:object) -> bool:
+        if not isinstance(outro, MissaoColeta):
+            return False
+        return (self.nome == outro.nome) """
+    

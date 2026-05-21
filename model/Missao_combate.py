@@ -1,15 +1,20 @@
-from model.Status import Status_Missao
 from model.missao import Missao
+from model.Status import EstadoConcluida
 
 class MissaoCombate (Missao):
-    def __init__(self, nome, descricao, recompensa, inimigos_a_derrotar:int, inimigo:str, status=Status_Missao.PENDENTE):
-        super().__init__(nome, descricao, recompensa, status)
+    def __init__(self, nome, descricao, recompensa, inimigo, inimigos_a_derrotar):
+        super().__init__(nome, descricao, recompensa)
+        #self._estado = EstadoPendente(self)
         self.inimigos_a_derrotar = inimigos_a_derrotar
         self.inimigo = inimigo
 
     @property 
     def inimigo(self):
         return self.__inimigo
+    @property
+    def inimigos_a_derrotar(self):
+        return self.__inimigos_a_derrotar
+    
     @inimigo.setter
     def inimigo(self, it):
         if not isinstance(it, str):
@@ -18,10 +23,7 @@ class MissaoCombate (Missao):
         it = ' '.join(it)
         it = it.title() #maiuscula primeira
         self.__inimigo = it
-
-    @property
-    def inimigos_a_derrotar(self):
-        return self.__inimigos_a_derrotar
+    
     @inimigos_a_derrotar.setter
     def inimigos_a_derrotar(self, qt):
         if not isinstance(qt, int):
@@ -30,23 +32,33 @@ class MissaoCombate (Missao):
         
     
     def exibir_dados(self):
-        return (f"{'='*30}\n--- MISSÃO DE COMBATE: ---"
-                f"\nNome da Missão: {self.nome}\n"
-                f"Descrição: {self.descricao}\n"
-                f"Recompensa: {self.recompensa} XP\n"
-                f"Status: {self.status.name}\n"
-                f"Inimigo : {self.inimigo}\n"
+        str = super().exibir_dados()
+        str += (f"Inimigo : {self.inimigo}\n"
                 f"Inimigos a derrotar: {self.inimigos_a_derrotar}\n{'='*30}")
+        return str        
+
+    def concluir_missao (self, valor):
+            super().concluir_missao(valor)
+            self.estado = self.estado.concluir(self.inimigos_a_derrotar, valor)
+
+            if isinstance(self.estado, EstadoConcluida):
+                print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                      f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
+            else:
+                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.inimigos_a_derrotar} "
+                          f"não foi atingida. Faltam {self.inimigos_a_derrotar-valor}")
 
     def __str__(self):
-        return (f"{self.nome} ({self.descricao}) XP:[{self.recompensa}]"
-                f"[{self.status.value}], inimigo: {self.inimigo} X [{self.inimigos_a_derrotar}]")
+        str = super().__str__()
+        str += f" inimigo: {self.inimigo} X [{self.inimigos_a_derrotar}]"
+        return str
    
-    def __eq__(self, outro:object) -> bool:
+    """ def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, MissaoCombate):
             return False
-        return (self.nome == outro.nome and self.descricao == outro.descricao 
-                and self.recompensa == outro.recompensa and self.status == outro.status
+        return (self.nome == outro.nome 
+                and self.descricao == outro.descricao 
+                and self.recompensa == outro.recompensa 
                 and self.inimigo == outro.inimigo 
-                and self.inimigos_a_derrotar == outro.inimigos_a_derrotar)
+                and self.inimigos_a_derrotar == outro.inimigos_a_derrotar) """
     

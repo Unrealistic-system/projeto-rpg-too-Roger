@@ -1,15 +1,32 @@
-from model.Status import Status_Missao
+from abc import ABC, abstractmethod
+from model.Status import *
 
-class Missao: # começar classe com maiusculo - convenção python
-    def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
+class Missao(ABC): # começar classe com maiusculo - convenção python
+    def __init__(self, nome, descricao, recompensa):
+        """ self.nome = None
+        self._descricao = None
+        self._recompensa = 0
+        self._estado = None """
+        
         self.nome = nome
-        self.descricao = descricao
-        self.recompensa = recompensa
-        self.status = status
+        self._descricao = descricao
+        self._recompensa = recompensa
+        self._estado = EstadoPendente(self)
 
     @property 
     def nome(self):
         return self._nome
+        
+    @property
+    def descricao(self):
+        return self._descricao
+    @property
+    def recompensa(self):
+        return self._recompensa
+    @property
+    def estado(self):
+        return self._estado
+    
     @nome.setter
     def nome(self, novo_nome):
         if not isinstance(novo_nome, str):
@@ -19,17 +36,7 @@ class Missao: # começar classe com maiusculo - convenção python
         if not novo_nome: # pega qualquer coisa, " " ou none tmb
             raise ValueError ("Nome é obrigatório!!!")
         self._nome = novo_nome
-        
-    @property
-    def descricao(self):
-        return self._descricao
-    @property
-    def recompensa(self):
-        return self._recompensa
-    @property
-    def status(self):
-        return self._status
-    
+
     @descricao.setter
     def descricao(self, n_desc):
         if not isinstance(n_desc, str):
@@ -48,65 +55,37 @@ class Missao: # começar classe com maiusculo - convenção python
             raise Exception ("Recompensa precisa ser positiva e menor que 50!!!")
         self._recompensa = n_rec
 
-    @status.setter
-    def status(self, n_st):
-        if isinstance(n_st, Status_Missao):
-            self._status = n_st
-            ''' # removido pois aqui aceitaria str e converteria para o tipo do status,
-                # mas não é permitido na descrição do trabalho.
-                # Para aceitar str é só retirar o comentário e acertar a tabulação
-                return
-            if isinstance(n_st, str):
-                try:
-                    self._status = Status_Missao[n_st.upper()]
-                except KeyError:# o que é: try to access a dictionary using a key that does not exist in that dictionary
-                    raise ValueError(f"'{n_st}' não é um Status válido.")
-            '''
+    @estado.setter
+    def estado(self, n_st):
+        if isinstance(n_st, EstadoMissao):
+            self._estado = n_st
         else:
-            raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
+            raise TypeError("Estado inválido.")
 
     def iniciar_missao (self):
-        if self.status == Status_Missao.EM_ANDAMENTO:
-            print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente.")
-            return
-        elif self.status == Status_Missao.CONCLUIDA:
-            print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente.")
-            return
-        elif self.status == Status_Missao.FRACASSADA:
-            print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente.")
-            return
+        if isinstance(self.estado, EstadoPendente):
+            self.estado = self.estado.iniciar()
+            return (f"Missão: {self.nome}, começou! Objetivo central da missão: {self.descricao}")
         else:
-            self.status = Status_Missao.EM_ANDAMENTO
-            print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
-
-    def concluir_missao (self):
-        if self.status == Status_Missao.CONCLUIDA:
-            print(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
-            return
-        elif self.status == Status_Missao.FRACASSADA:
-            print(f"Missão '{self.nome}' Já foi Terminada com Fracasso, não é possivel concluir novamente.")
-            return
-        elif self.status == Status_Missao.PENDENTE:
-            print(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
-            return
-        else:
-            # projetar possibilidade de fracasso dps
-            self.status = Status_Missao.CONCLUIDA
-            print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
-                  f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
-
-
-    def exibir_dados(self):
-        return (f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
-                f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
-                f"Status: {self.status.name}\n{'='*30}")
-                # posso usar contas pra exibir varios caracteres iguais :D
-
-    def __str__(self):
-        return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]"
-   
+            return (f"Erro não foi possivel iniciar!")
+        
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, Missao):
             return False
-        return self.nome == outro.nome and self.descricao == outro.descricao and self.recompensa == outro.recompensa and self.status == outro.status
+        return (self.nome == outro.nome)
+
+    @abstractmethod
+    def concluir_missao (self, valor):
+        pass
+
+    @abstractmethod
+    def exibir_dados(self):
+        return (f"{self.__class__.__name__}\n"
+                f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
+                f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
+                f"Status: {self.estado.__class__.__name__}\n")
     
+    @abstractmethod
+    def __str__(self):
+        return (f"{self.__class__.__name__}: {self.nome} ({self.descricao}) "
+                f"XP:[{self.recompensa}] [{self.estado.__class__.__name__}]")
